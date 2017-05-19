@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
  <transfersh - unofficial command line client for https://github.com/dutchcoders/transfer.sh>
     Copyright (C) 2017  Lukas N. <Alpix> contact[at]alpix.eu - https://github.com/AlpixTM/transfersh
@@ -17,4 +18,4 @@
     If not, see <http://www.gnu.org/licenses/>.
 
 """
-print ("unofficial command line client for https://transfer.sh/ based on python \nby Alpix (https://alpix.eu) \ncontribute: https://github.com/AlpixTM/transfersh")
+print (" ====== Transfersh ===== \nunofficial command line client for https://transfer.sh/ based on python \nby Alpix (https://alpix.eu) \ncontribute: https://github.com/AlpixTM/transfersh")
