@@ -22,7 +22,7 @@ import argparse
 import requests
 print (
     " ====== Transfersh ===== \nUnofficial command-line client for https://transfer.sh/ based on python "
-    "\nby Alpix (https://alpix.eu) "
+    "\nby Alpix (https://alpix.eu)"
     "\ncontribute: https://github.com/AlpixTM/transfersh"
 )
 parser = argparse.ArgumentParser()
@@ -30,16 +30,11 @@ parser.add_argument("file", help="path to the file to upload",)
 parser.add_argument("-v", "--verbosity", help="increase output verbosity", action="store_true")
 args = parser.parse_args()
 print (args.file)
-if args.verbosity:
-    verbosity = True
-else:
-    verbosity = False
 
-filepath = args.file
-
-with open(filepath) as fh:
+file_name = args.file.split("/")
+with open(args.file) as fh:
     mydata = fh.read()
-    response = requests.put('https://transfer.sh/' + args.file,
+    response = requests.put('https://transfer.sh/' + str(file_name[-1]),
                             data=mydata,
                             )
 print (response.text)
