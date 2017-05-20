@@ -18,4 +18,28 @@
     If not, see <http://www.gnu.org/licenses/>.
 
 """
-print (" ====== Transfersh ===== \nunofficial command line client for https://transfer.sh/ based on python \nby Alpix (https://alpix.eu) \ncontribute: https://github.com/AlpixTM/transfersh")
+import argparse
+import requests
+print (
+    " ====== Transfersh ===== \nUnofficial command-line client for https://transfer.sh/ based on python "
+    "\nby Alpix (https://alpix.eu) "
+    "\ncontribute: https://github.com/AlpixTM/transfersh"
+)
+parser = argparse.ArgumentParser()
+parser.add_argument("file", help="path to the file to upload",)
+parser.add_argument("-v", "--verbosity", help="increase output verbosity", action="store_true")
+args = parser.parse_args()
+print (args.file)
+if args.verbosity:
+    verbosity = True
+else:
+    verbosity = False
+
+filepath = args.file
+
+with open(filepath) as fh:
+    mydata = fh.read()
+    response = requests.put('https://transfer.sh/' + args.file,
+                            data=mydata,
+                            )
+print (response.text)
