@@ -1,6 +1,9 @@
 # transfersh
 unofficial command-line client for https://github.com/dutchcoders/transfer.sh (https://transfer.sh)
 
+### Usage
+        transfersh filename
+
 ### Install
 ##### Debian
     1. echo "deb http://mirror.alpix.eu/ debianpkg/" >> /etc/apt/sources.list
