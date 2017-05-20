@@ -30,7 +30,8 @@ parser.add_argument("file", help="path to the file to upload",)
 parser.add_argument("-v", "--verbosity", help="increase output verbosity", action="store_true")
 parser.add_argument("-n", "--name", help="name of the file on Transfer.sh",)
 args = parser.parse_args()
-print (args.file)
+if args.verbosity == True:
+    print ('Selected file: ' + args.file)
 
 if args.name:
     file_name = args.name
@@ -43,4 +44,4 @@ with open(args.file) as fh:
     response = requests.put('https://transfer.sh/' + file_name,
                             data=mydata,
                             )
-print (response.text)
+print ('File saved at: ' + response.text)
