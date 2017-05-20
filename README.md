@@ -20,6 +20,6 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
             1. curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/transfersh.tar.gz
             2. tar xf transfersh.tar.gz
             3. cd transfersh && makepkg -si
-        *Last step: Vote on aur if the package is useful. <3 [Vote here](https://aur.archlinux.org/packages/transfersh/ "VOTE!")*
+        *Last step: Vote on aur if the package is useful for you. <3*
 #### PLEASE FEEL FREE TO CONTRIBUTE!
 Just create a Pull request...
