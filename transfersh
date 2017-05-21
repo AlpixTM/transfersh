@@ -39,7 +39,7 @@ else:
     file_name = args.file.split("/")
     file_name = str(file_name[-1])
 
-with open(args.file) as fh:
+with open(args.file, encoding="latin-1") as fh:
     mydata = fh.read()
     response = requests.put('https://transfer.sh/' + file_name,
                             data=mydata,
