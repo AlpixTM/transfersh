@@ -6,7 +6,7 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
 
 ### Install
 ##### Debian / Ubuntu
-(Tested on Debian & elementary OS)
+(Tested on Debian & elementary OS & Ubuntu)
 
     1. echo "deb http://mirror.alpix.eu/ debianpkg/" >> /etc/apt/sources.list
     2. apt-get update && apt-get upgrade
