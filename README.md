@@ -2,8 +2,13 @@
 unofficial command-line client for https://github.com/dutchcoders/transfer.sh (https://transfer.sh)
 
 ### Usage
-        transfersh filename
 
+#### Upload file        
+        transfersh filename
+        >>>>File saved at: https://transfer.sh/XXXXX/filename
+#### Upload file and change the name    
+        transfersh -n new_filename filename
+        >>>>File saved at: https://transfer.sh/XXXXX/new_filename
 ### Install
 ##### Debian / Ubuntu
 (Tested on Debian & elementary OS & Ubuntu)
