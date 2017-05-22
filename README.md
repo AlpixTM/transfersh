@@ -13,9 +13,9 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
 ##### Debian / Ubuntu
 (Tested on Debian & elementary OS & Ubuntu)
 
-    1. echo "deb http://mirror.alpix.eu/ debianpkg/" >> /etc/apt/sources.list
+    1. echo "deb [trusted=yes] http://mirror.alpix.eu/ debianpkg/" >> /etc/apt/sources.list
     2. apt-get update && apt-get upgrade
-    3. apt-get install transfersh -y --force-yes
+    3. apt-get install transfersh -y
 #### Arch-based systems
 
         If you can access the AUR with your package manager (https://aur.archlinux.org/):
