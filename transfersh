@@ -20,17 +20,18 @@
 """
 import argparse
 import requests
-print (
-    " ====== Transfersh ===== \nUnofficial command-line client for https://transfer.sh/ based on python "
-    "\nby Alpix (https://alpix.eu)"
-    "\ncontribute: https://github.com/AlpixTM/transfersh"
-)
+
 parser = argparse.ArgumentParser()
 parser.add_argument("file", help="path to the file to upload",)
 parser.add_argument("-v", "--verbosity", help="increase output verbosity", action="store_true")
 parser.add_argument("-n", "--name", help="name of the file on Transfer.sh",)
 args = parser.parse_args()
 if args.verbosity:
+    print (
+    " ====== Transfersh ===== \nUnofficial command-line client for https://transfer.sh/ based on python "
+    "\nby Alpix (https://alpix.eu)"
+    "\ncontribute: https://github.com/AlpixTM/transfersh"
+    )
     print ('Selected file: ' + args.file)
 
 if args.name:
