@@ -39,7 +39,7 @@ if args.verbosity:
     print ('Selected file to upload: ' + args.file)
 
 
-def upload(file, dir=False):
+def upload(file, recursive=False):
     """Upload procedure"""
     if args.name:
         filename = args.name
@@ -50,7 +50,7 @@ def upload(file, dir=False):
         response = requests.put('https://transfer.sh/' + filename,
                                 data=fh,
                                 )
-    if dir == True:
+    if recursive == True:
         print ('File ' + file + ' saved at: ' + response.text)
     else:
         print ('File saved at: ' + response.text)

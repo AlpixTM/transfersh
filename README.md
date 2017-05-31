@@ -6,9 +6,19 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
 #### Upload file        
         transfersh filename
         >>>>File saved at: https://transfer.sh/XXXXX/filename
-#### Upload file and change the name    
+#### Upload file && change the name    
         transfersh -n new_filename filename
         >>>>File saved at: https://transfer.sh/XXXXX/new_filename
+#### Upload all files in directory recursively
+        transfersh  -r /xx/xy/
+        File /xx/xy/TEST.txt saved at: https://transfer.sh/XXXXX/TEST.txt
+        File /xx/xy/yy/testtest.txt saved at: https://transfer.sh/XXXXX/testtest.txt
+#### Upload all files in current directory recursively && change the name
+        transfersh  -r ./ -n test.txt
+        File ./TEST.txt saved at: https://transfer.sh/XXXXX/test.txt
+        File ./testtest.txt saved at: https://transfer.sh/XXXXX/test.txt
+
+    
 ### Install
 ##### Debian / Ubuntu
 (Tested on Debian & elementary OS & Ubuntu)
