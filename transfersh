@@ -20,11 +20,11 @@
 """
 import argparse
 import requests
-
 parser = argparse.ArgumentParser()
 parser.add_argument("file", help="path to the file to upload",)
 parser.add_argument("-v", "--verbosity", help="increase output verbosity", action="store_true")
 parser.add_argument("-n", "--name", help="change name of the file on Transfer.sh",)
+# parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
 args = parser.parse_args()
 if args.verbosity:
     print (
@@ -45,3 +45,17 @@ with open(args.file, 'rb', buffering=0) as fh:
                             data=fh,
                             )
 print ('File saved at: ' + response.text)
+
+"""
+if args.tor:
+// Tor Support needs new concept -> Public tor socks proxy? Public tor http proxy without daily changing cookie !?
+
+    cookies = dict(onion_cab_iKnowShit='5bc030f023c7a17bd67afde617a5852b')
+
+    with open(args.file, 'rb', buffering=0) as fh:
+        response = requests.put('http://jxm5d6emw5rknovg.onion.cab/' + file_name,
+                            data=fh,
+                            cookies=cookies,
+                            )
+    print ('File saved at: ' + response.text)
+"""
