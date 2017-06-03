@@ -17,7 +17,12 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
         transfersh  -r ./ -n test.txt
         File ./TEST.txt saved at: https://transfer.sh/XXXXX/test.txt
         File ./testtest.txt saved at: https://transfer.sh/XXXXX/test.txt
-
+#### Upload all files as gzip compressed tar 
+        transfersh -rtg ./ -n myupload-as-tar-gz.tar.gz
+        File saved at: https://transfer.sh/XXXXX/myupload-as-tar-gz.tar.gz
+#### Upload all files as uncompressed tar
+        transfersh -rt ./ -n myupload-as-tar.tar
+        File saved at: https://transfer.sh/XXXXX/myupload-as-tar.tar
     
 ### Install
 ##### Debian / Ubuntu
