@@ -23,6 +23,7 @@ import requests
 import glob
 import os
 import tarfile
+
 parser = argparse.ArgumentParser()
 parser.add_argument("file", help="path to the file or directory to upload",)
 parser.add_argument("-v", "--verbosity", help="increase output verbosity", action="store_true")
@@ -30,6 +31,7 @@ parser.add_argument("-n", "--name", help="change name of the file on Transfer.sh
 parser.add_argument("-r", "--recursive", help="Upload all files in a directory recursively", action="store_true")
 parser.add_argument("-tg", "--targz", help="upload as gzip compressed tar archive", action="store_true")
 parser.add_argument("-t", "--tar", help="upload as uncompressed tar archive", action="store_true")
+parser.add_argument("-vt", "--virustotal", help="check file with virustotal", action="store_true")
 # parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
 args = parser.parse_args()
 
@@ -43,20 +45,25 @@ if args.verbosity:
 
 
 def upload(file, recursive=False):
+    params = ""
+    message = "File saved at: "
     """Upload procedure"""
+    if args.virustotal:
+        params= params + "/virustotal"
+        message = "Virustotal Report is available here: "
     if args.name:
         filename = args.name
     else:
         filename = file.split("/")
         filename = str(filename[-1])
     with open(file, 'rb', buffering=0) as fh:
-        response = requests.put('https://transfer.sh/' + filename,
+        response = requests.put('https://transfer.sh/' + filename + params,
                                 data=fh,
                                 )
     if recursive == True:
         print ('File ' + file + ' saved at: ' + response.text)
     else:
-        print ('File saved at: ' + response.text)
+        print (message + response.text)
     return
 
 """
