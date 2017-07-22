@@ -26,7 +26,12 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
 #### Check file for virus with [Virustotal](https://www.virustotal.com)    
         transfersh -vt filename
         Virustotal Report is available here: https://www.virustotal.com/file/....
-        
+#### Upload to your transfersh server instead of https://transfer.sh
+        transfersh -sn upload.server.name filename
+        File saved at: https://upload.server.name/XXXXX/filename
+
+
+
 ### Install
 ##### Debian / Ubuntu
 (Tested on Debian & elementary OS & Ubuntu)

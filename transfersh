@@ -32,7 +32,7 @@ parser.add_argument("-r", "--recursive", help="Upload all files in a directory r
 parser.add_argument("-tg", "--targz", help="upload as gzip compressed tar archive", action="store_true")
 parser.add_argument("-t", "--tar", help="upload as uncompressed tar archive", action="store_true")
 parser.add_argument("-vt", "--virustotal", help="check file with virustotal", action="store_true")
-parser.add_argument("-sn", "--servername", help="use your server.name instead of transfer.sh",)
+parser.add_argument("-sn", "--servername", help="use your server.name instead of transfer.sh e.g. -sn up.de for https://up.de/ ",)
 # parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
 args = parser.parse_args()
 
