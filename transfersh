@@ -32,6 +32,7 @@ parser.add_argument("-r", "--recursive", help="Upload all files in a directory r
 parser.add_argument("-tg", "--targz", help="upload as gzip compressed tar archive", action="store_true")
 parser.add_argument("-t", "--tar", help="upload as uncompressed tar archive", action="store_true")
 parser.add_argument("-vt", "--virustotal", help="check file with virustotal", action="store_true")
+parser.add_argument("-sn", "--servername", help="use your server.name instead of transfer.sh",)
 # parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
 args = parser.parse_args()
 
@@ -42,6 +43,13 @@ if args.verbosity:
     "\ncontribute: https://github.com/AlpixTM/transfersh"
     )
     print ('Selected file to upload: ' + args.file)
+
+# define upload url
+if args.servername:
+    upload_servername = args.servername
+else:
+    upload_servername = "transfer.sh"
+
 
 
 def upload(file, recursive=False):
@@ -57,7 +65,7 @@ def upload(file, recursive=False):
         filename = file.split("/")
         filename = str(filename[-1])
     with open(file, 'rb', buffering=0) as fh:
-        response = requests.put('https://transfer.sh/' + filename + params,
+        response = requests.put('https://' + upload_servername + '/' + filename + params,
                                 data=fh,
                                 )
     if recursive == True:
