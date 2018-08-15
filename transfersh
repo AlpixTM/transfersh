@@ -25,14 +25,14 @@ import os
 import tarfile
 
 parser = argparse.ArgumentParser()
-parser.add_argument("file", help="path to the file or directory to upload",)
-parser.add_argument("-v", "--verbosity", help="increase output verbosity", action="store_true")
-parser.add_argument("-n", "--name", help="change name of the file on Transfer.sh",)
+parser.add_argument("file", help="Path to the file or directory to upload")
+parser.add_argument("-v", "--verbosity", help="Increase output verbosity", action="store_true")
+parser.add_argument("-n", "--name", help="Change name of the file on Transfer.sh")
 parser.add_argument("-r", "--recursive", help="Upload all files in a directory recursively", action="store_true")
-parser.add_argument("-tg", "--targz", help="upload as gzip compressed tar archive", action="store_true")
-parser.add_argument("-t", "--tar", help="upload as uncompressed tar archive", action="store_true")
-parser.add_argument("-vt", "--virustotal", help="check file with virustotal", action="store_true")
-parser.add_argument("-sn", "--servername", help="use your server.name instead of transfer.sh e.g. -sn up.de for https://up.de/ ",)
+parser.add_argument("-tg", "--targz", help="Upload as gzip compressed tar archive", action="store_true")
+parser.add_argument("-t", "--tar", help="Upload as uncompressed tar archive", action="store_true")
+parser.add_argument("-vt", "--virustotal", help="Check file with virustotal", action="store_true")
+parser.add_argument("-sn", "--servername", help="Use your server.name instead of transfer.sh e.g. -sn up.de for https://up.de/")
 # parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
 args = parser.parse_args()
 
@@ -48,8 +48,8 @@ if args.verbosity:
 if args.servername:
     upload_servername = args.servername
 else:
+    # default server transfer.sh
     upload_servername = "transfer.sh"
-
 
 
 def upload(file, recursive=False):
@@ -57,7 +57,7 @@ def upload(file, recursive=False):
     message = "File saved at: "
     """Upload procedure"""
     if args.virustotal:
-        params= params + "/virustotal"
+        params = params + "/virustotal"
         message = "Virustotal Report is available here: "
     if args.name:
         filename = args.name
@@ -68,37 +68,46 @@ def upload(file, recursive=False):
         response = requests.put('https://' + upload_servername + '/' + filename + params,
                                 data=fh,
                                 )
-    if recursive == True:
-        print ('File ' + file + ' saved at: ' + response.text)
+    if recursive:
+        print('File ' + file + ' saved at: ' + response.text)
     else:
-        print (message + response.text)
+        print(message + response.text)
     return
 
 """
     if args.tor:
-    Tor Support needs new concept -> Public tor socks proxy? Public tor http proxy without daily changing cookie !?
+    Tor Support needs new concept -> Public tor socks proxy? Public tor http proxy without daily changing cookie!?
 
 """
-if args.tar == True:
+
+if args.tar:
     tar = tarfile.open("/tmp/transfersh-upload.tar", "w")
     tarfilename = "/tmp/transfersh-upload.tar"
-if args.targz == True:
+
+if args.targz:
     tar = tarfile.open("/tmp/transfersh-upload.tar.gz", "w:gz")
     tarfilename = "/tmp/transfersh-upload.tar.gz"
+
 if args.recursive:
-    check = os.path.isfile(args.file)
-    if check == True:
+    isfile = os.path.isfile(args.file)
+    if isfile:
         exit("Not a dir -> don not use -r // --recursive")
     for filename in glob.iglob(args.file + "**", recursive=True):
         check = os.path.isfile(filename)
-        if check != False:
-            if args.tar == True or args.targz == True:
+        if check is not False:
+            if args.tar is True or args.targz is True:
                 tar.add(filename)
             else:
                 upload(filename, True)
-    if args.tar == True or args.targz == True:
+    if args.tar is True or args.targz is True:
         tar.close()
         upload(tarfilename, False)
         os.remove(tarfilename)
 else:
-    upload(args.file, False)
+    if args.tar is True or args.targz is True:
+        tar.add(args.file)
+        tar.close()
+        upload(tarfilename, False)
+        os.remove(tarfilename)
+    else:
+        upload(args.file, False)
