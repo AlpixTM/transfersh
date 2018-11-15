@@ -91,7 +91,7 @@ if args.targz:
 if args.recursive:
     isfile = os.path.isfile(args.file)
     if isfile:
-        exit("Not a dir -> don not use -r // --recursive")
+        exit("Not a dir -> do not use -r // --recursive")
     for filename in glob.iglob(args.file + "**", recursive=True):
         check = os.path.isfile(filename)
         if check is not False:
