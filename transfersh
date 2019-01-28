@@ -19,10 +19,11 @@
 
 """
 import argparse
-import requests
 import glob
 import os
 import tarfile
+import requests
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("file", help="Path to the file or directory to upload")
@@ -35,23 +36,8 @@ parser.add_argument("-vt", "--virustotal", help="Check file with virustotal", ac
 parser.add_argument("-sn", "--servername", help="Use your server.name instead of transfer.sh e.g. -sn up.de for https://up.de/")
 parser.add_argument("-d", "--dryrun", help="Print the commands that would be executed, but do not execute them.", action="store_true")
 # parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
+
 args = parser.parse_args()
-
-if args.verbosity:
-    print (
-    " ====== Transfersh ===== \nUnofficial command-line client for https://transfer.sh/ based on python "
-    "\nby Alpix (https://alpix.eu)"
-    "\ncontribute: https://github.com/AlpixTM/transfersh"
-    )
-    print ('Selected file to upload: ' + args.file)
-
-# define upload url
-if args.servername:
-    upload_servername = args.servername
-else:
-    # default server transfer.sh
-    upload_servername = "transfer.sh"
-
 
 def upload(file, recursive=False):
     params = ""
@@ -77,6 +63,22 @@ def upload(file, recursive=False):
     else:
         print('File {0} mock saved.'.format(file))
     return
+
+if args.verbosity:
+    print (
+    " ====== Transfersh ===== \nUnofficial command-line client for https://transfer.sh/ based on python "
+    "\nby Alpix (https://alpix.eu)"
+    "\ncontribute: https://github.com/AlpixTM/transfersh"
+    )
+    print ('Selected file to upload: ' + args.file)
+
+# define upload url
+if args.servername:
+    upload_servername = args.servername
+else:
+    # default server transfer.sh
+    upload_servername = "transfer.sh"
+
 
 """
     if args.tor:
