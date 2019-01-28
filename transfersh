@@ -22,12 +22,20 @@ import argparse
 import glob
 import os
 import tarfile
-import requests
+import sys
+
+try:
+    import requests
+except ModuleNotFoundError:
+    print("In order to use transfersh, you need to install requests mudule (sudo pip install requests)")
+    exit(0)
+
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("file", help="Path to the file or directory to upload")
 parser.add_argument("-v", "--verbosity", help="Increase output verbosity", action="store_true")
+parser.add_argument("-p", "--progress", help="Display progress bar", action="store_true")
 parser.add_argument("-n", "--name", help="Change name of the file on Transfer.sh")
 parser.add_argument("-r", "--recursive", help="Upload all files in a directory recursively", action="store_true")
 parser.add_argument("-tg", "--targz", help="Upload as gzip compressed tar archive", action="store_true")
@@ -39,30 +47,87 @@ parser.add_argument("-d", "--dryrun", help="Print the commands that would be exe
 
 args = parser.parse_args()
 
+
 def upload(file, recursive=False):
+    # Upload procedure
     params = ""
     message = "File saved at: "
-    """Upload procedure"""
+
     if args.virustotal:
         params = params + "/virustotal"
         message = "Virustotal Report is available here: "
+
     if args.name:
         filename = args.name
     else:
         filename = file.split("/")
         filename = str(filename[-1])
+
     if not args.dryrun:
         with open(file, 'rb', buffering=0) as fh:
-            response = requests.put('https://' + upload_servername + '/' + filename + params,
-                                    data=fh,
-                                    )
+            if progressbar:
+                # Dirty MultipartEncoder object(required byMultipart EncoderMonitor) simulation hack
+                fh.len = os.path.getsize(file)
+                data = MultipartEncoderMonitor(fh, callback)
+            else:
+                data = fh
+
+            response = requests.put('https://' + upload_servername + '/' + filename + params, data=data)
+
         if recursive:
-            print('File ' + file + ' saved at: ' + response.text)
+            print('\r File ' + file + ' saved at: ' + response.text)
         else:
-            print(message + response.text)
+            print('\r' + message + response.text)
     else:
         print('File {0} mock saved.'.format(file))
     return
+
+
+last_progress = 0
+
+
+def callback(monitor):
+    # Progress bar callback
+    global last_progress
+    progress = monitor.bytes_read/monitor.len
+
+    if progress == last_progress:
+        if last_progress == 1:
+            progress = -1
+        else:
+            progress = 0
+    else:
+        last_progress = progress
+
+    update_progress(progress)
+
+
+# Progress bar
+def update_progress(progress):
+    status = ""
+
+    if progress == -1:
+        return
+    elif progress >= 1:
+        progress = 1
+        status = "Done...\r\n Waiting for response"
+
+    block = int(round(100*progress))
+    text = "\r Upload: [{0}] {1}% {2}".format("#"*block + "-"*(100-block), "{0:.2f}".format(progress*100), status)
+    sys.stdout.write(text)
+    sys.stdout.flush()
+
+
+progressbar = False
+if args.progress:
+    # Load progressbar dependencies
+    progressbar = True
+    try:
+        from requests_toolbelt import(MultipartEncoder, MultipartEncoderMonitor)
+    except ModuleNotFoundError:
+        print("In order to use the progress bar, you need to install requests_toolbelt (sudo pip install requests_toolbelt)")
+        progressbar = False
+
 
 if args.verbosity:
     print (
@@ -72,7 +137,7 @@ if args.verbosity:
     )
     print ('Selected file to upload: ' + args.file)
 
-# define upload url
+# Define upload url
 if args.servername:
     upload_servername = args.servername
 else:
