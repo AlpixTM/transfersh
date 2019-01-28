@@ -33,6 +33,7 @@ parser.add_argument("-tg", "--targz", help="Upload as gzip compressed tar archiv
 parser.add_argument("-t", "--tar", help="Upload as uncompressed tar archive", action="store_true")
 parser.add_argument("-vt", "--virustotal", help="Check file with virustotal", action="store_true")
 parser.add_argument("-sn", "--servername", help="Use your server.name instead of transfer.sh e.g. -sn up.de for https://up.de/")
+parser.add_argument("-d", "--dry-run", help="Print the commands that would be executed, but do not execute them.", action="store_true")
 # parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
 args = parser.parse_args()
 
