@@ -65,14 +65,17 @@ def upload(file, recursive=False):
     else:
         filename = file.split("/")
         filename = str(filename[-1])
-    with open(file, 'rb', buffering=0) as fh:
-        response = requests.put('https://' + upload_servername + '/' + filename + params,
-                                data=fh,
-                                )
-    if recursive:
-        print('File ' + file + ' saved at: ' + response.text)
+    if not args.dry-run:
+        with open(file, 'rb', buffering=0) as fh:
+            response = requests.put('https://' + upload_servername + '/' + filename + params,
+                                    data=fh,
+                                    )
+        if recursive:
+            print('File ' + file + ' saved at: ' + response.text)
+        else:
+            print(message + response.text)
     else:
-        print(message + response.text)
+        print('File {0} mock saved.', file)
     return
 
 """
