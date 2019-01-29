@@ -21,8 +21,8 @@
 import argparse
 import glob
 import os
-import tarfile
 import sys
+import tarfile
 import tempfile
 
 try:
@@ -137,7 +137,11 @@ if args.verbosity:
     "\nby Alpix (https://alpix.eu)"
     "\ncontribute: https://github.com/AlpixTM/transfersh"
     )
-    print ('Selected file to upload: ' + args.file)
+    if args.recursive:
+        print ('Selected path to upload: ' + args.file)
+    else:
+        print ('Selected file to upload: ' + args.file)
+
 
 # Define upload url
 if args.servername:
