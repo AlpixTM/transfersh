@@ -64,7 +64,7 @@ def upload(file, recursive=False):
         filename = str(filename[-1])
 
     if not args.dryrun:
-        with open(file, 'rb', buffering=0) as fh:
+        with open(file, 'rb', 0) as fh:
             if progressbar:
                 # Dirty MultipartEncoder object(required byMultipart EncoderMonitor) simulation hack
                 fh.len = os.path.getsize(file)
