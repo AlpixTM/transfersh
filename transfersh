@@ -84,7 +84,9 @@ def upload(file, recursive=False):
 
 
 last_progress = 0
-
+# Get terminal dimensions for progress bar. stty _should_ be universal
+# since it's provided by coreutils, but this is kinda hacky.
+rows, cols = [int(n) for n in os.popen('stty size', 'r').read().split()]
 
 def callback(monitor):
     # Progress bar callback
