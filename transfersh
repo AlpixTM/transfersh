@@ -27,7 +27,7 @@ import tempfile
 
 try:
     import requests
-except ModuleNotFoundError:
+except ImportError:
     print("In order to use transfersh, you need to install requests mudule (sudo pip install requests)")
     exit(0)
 
@@ -126,7 +126,7 @@ if args.progress:
     progressbar = True
     try:
         from requests_toolbelt import(MultipartEncoder, MultipartEncoderMonitor)
-    except ModuleNotFoundError:
+    except ImportError:
         print("In order to use the progress bar, you need to install requests_toolbelt (sudo pip install requests_toolbelt)")
         progressbar = False
 
