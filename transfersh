@@ -66,13 +66,13 @@ def upload(file, recursive=False):
     if not args.dryrun:
         with open(file, 'rb', 0) as fh:
             if progressbar:
-                # Dirty MultipartEncoder object(required byMultipart EncoderMonitor) simulation hack
+                # Dirty MultipartEncoder object(required byMultipartEncoderMonitor) simulation hack
                 fh.len = os.path.getsize(file)
                 data = MultipartEncoderMonitor(fh, callback)
             else:
                 data = fh
 
-            response = requests.put('https://' + upload_servername + '/' + filename + params, data=data)
+            response = requests.put('https://' + upload_servername + '/' + filename + params, data)
 
         if recursive:
             print('\r File ' + file + ' saved at: ' + response.text)
@@ -84,9 +84,7 @@ def upload(file, recursive=False):
 
 
 last_progress = 0
-# Get terminal dimensions for progress bar. stty _should_ be universal
-# since it's provided by coreutils, but this is kinda hacky.
-rows, cols = [int(n) for n in os.popen('stty size', 'r').read().split()]
+
 
 def callback(monitor):
     # Progress bar callback
@@ -106,16 +104,18 @@ def callback(monitor):
 
 # Progress bar
 def update_progress(progress):
+    bar_len = [int(n) for n in os.popen('stty size', 'r').read().split()][1] - 24
+    #print(bar_len)
     status = ""
 
     if progress == -1:
         return
     elif progress >= 1:
         progress = 1
-        status = "Done...\r\n Waiting for response"
+        status = "Done\r\n Waiting for response"
 
-    block = int(round(100*progress))
-    text = "\r Upload: [{0}] {1}% {2}".format("#"*block + "-"*(100-block), "{0:.2f}".format(progress*100), status)
+    block = int(round(bar_len*progress))
+    text = "\r Upload: [{0}] {1}% {2}".format("#"*block + "-"*(bar_len-block), "{0:.2f}".format(progress*100), status)
     sys.stdout.write(text)
     sys.stdout.flush()
 
