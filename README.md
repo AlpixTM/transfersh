@@ -1,10 +1,19 @@
 # transfersh
 unofficial command-line client for https://github.com/dutchcoders/transfer.sh (https://transfer.sh)
 
-### Usage
+### Documentation
+  * [Usage](#usage)
+  * [Install](#install)
+
+### Usage 
+<a name="usage"></a>
 
 #### Upload file        
         transfersh filename
+        >>>>File saved at: https://transfer.sh/XXXXX/filename
+#### Upload file with progress bar       
+        transfersh -p filename
+        >>>>Upload: [#####################################-----------] 75.68%
         >>>>File saved at: https://transfer.sh/XXXXX/filename
 #### Upload file && change the name    
         transfersh -n new_filename filename
@@ -32,15 +41,14 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
 
 
 
-### Install
+### Install 
+<a name="install"></a>
 ##### Debian / Ubuntu
 (Tested on Debian & elementary OS & Ubuntu)
-
     1. echo "deb [trusted=yes] http://mirror.alpix.eu/ debianpkg/" >> /etc/apt/sources.list
     2. apt-get update && apt-get upgrade
     3. apt-get install transfersh -y
 #### Arch-based systems
-
         If you can access the AUR with your package manager (https://aur.archlinux.org/):
             e.g. yaourt as package manager:  
                 1.  yaourt -S transfersh
