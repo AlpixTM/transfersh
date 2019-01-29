@@ -44,7 +44,7 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
 ### Install 
 <a name="install"></a>
 ##### Debian / Ubuntu
-(Tested on Debian & elementary OS & Ubuntu)
+    (Not Tested yet!)
     1. echo "deb [trusted=yes] http://mirror.alpix.eu/ debianpkg/" >> /etc/apt/sources.list
     2. apt-get update && apt-get upgrade
     3. apt-get install transfersh -y
