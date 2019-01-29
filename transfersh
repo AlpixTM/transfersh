@@ -23,13 +23,13 @@ import glob
 import os
 import tarfile
 import sys
+import tempfile
 
 try:
     import requests
 except ModuleNotFoundError:
     print("In order to use transfersh, you need to install requests mudule (sudo pip install requests)")
     exit(0)
-
 
 
 parser = argparse.ArgumentParser()
@@ -154,12 +154,14 @@ else:
 """
 
 if args.tar:
-    tar = tarfile.open("/tmp/transfersh-upload.tar", "w")
-    tarfilename = "/tmp/transfersh-upload.tar"
+    temp_dir = tempfile.gettempdir()
+    tar = tarfile.open(temp_dir + "/transfersh-upload.tar", mode="w")
+    tarfilename = temp_dir + "/transfersh-upload.tar"
 
 if args.targz:
-    tar = tarfile.open("/tmp/transfersh-upload.tar.gz", "w:gz")
-    tarfilename = "/tmp/transfersh-upload.tar.gz"
+    temp_dir = tempfile.gettempdir()
+    tar = tarfile.open(temp_dir + "/transfersh-upload.tar", mode="w:gz")
+    tarfilename = temp_dir + "/transfersh-upload.tar.gz"
 
 if args.recursive:
     isfile = os.path.isfile(args.file)
