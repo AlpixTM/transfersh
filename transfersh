@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
  <transfersh - unofficial command line client for https://github.com/dutchcoders/transfer.sh>
-    Copyright (C) 2017  Lukas N. <Alpix> contact[at]alpix.eu - https://github.com/AlpixTM/transfersh
+    Copyright (C) 2017-2020  Lukas N. <Alpix> writeme[at]alpix.eu - https://github.com/AlpixTM/transfersh
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published
