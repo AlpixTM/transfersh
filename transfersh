@@ -24,6 +24,7 @@ import os
 import sys
 import tarfile
 import tempfile
+import time
 
 try:
     import requests
@@ -62,6 +63,13 @@ def upload(file, recursive=False):
     else:
         filename = file.split("/")
         filename = str(filename[-1])
+
+    if upload_servername == "transfer.sh":
+        if(os.path.getsize(file) > 1073741824):
+            print("As of 2020 until unknown, https://transfer.sh only accept files up to 1GB. "
+                  "This file is bigger. Anyway, let's try this...")
+            time.sleep(3)
+
 
     if not args.dryrun:
         with open(file, 'rb', 0) as fh:
