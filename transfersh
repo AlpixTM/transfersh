@@ -68,6 +68,7 @@ def upload(file, recursive=False):
             if progressbar:
                 # Dirty MultipartEncoder object(required byMultipartEncoderMonitor) simulation hack
                 fh.len = os.path.getsize(file)
+
                 data = MultipartEncoderMonitor(fh, callback)
             else:
                 data = fh
@@ -154,7 +155,6 @@ else:
 """
     if args.tor:
     Tor Support needs new concept -> Public tor socks proxy? Public tor http proxy without daily changing cookie!?
-
 """
 
 if args.tar:
@@ -164,7 +164,7 @@ if args.tar:
 
 if args.targz:
     temp_dir = tempfile.gettempdir()
-    tar = tarfile.open(temp_dir + "/transfersh-upload.tar", mode="w:gz")
+    tar = tarfile.open(temp_dir + "/transfersh-upload.tar.gz", mode="w:gz")
     tarfilename = temp_dir + "/transfersh-upload.tar.gz"
 
 if args.recursive:
