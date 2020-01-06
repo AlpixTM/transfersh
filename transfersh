@@ -181,7 +181,7 @@ if args.targz:
 
 if args.saveurls:
     savefilename = args.saveurls
-    savefile = open(savefilename, 'w')
+    savefile = open(savefilename, 'a+')
 
 
 if args.recursive:
