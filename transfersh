@@ -25,6 +25,7 @@ import sys
 import tarfile
 import tempfile
 import time
+import zipfile
 
 try:
     import requests
@@ -45,6 +46,7 @@ parser.add_argument("-vt", "--virustotal", help="Check file with virustotal", ac
 parser.add_argument("-sn", "--servername", help="Use your server.name instead of transfer.sh e.g. -sn up.de for https://up.de/")
 parser.add_argument("-d", "--dryrun", help="Print the commands that would be executed, but do not execute them.", action="store_true")
 parser.add_argument("-s", "--saveurls", help="Path to file where the URLs should be saved to.")
+parser.add_argument("-z", "--zip", help="Upload as zip archive", action="store_true")
 # parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
 
 args = parser.parse_args()
@@ -133,7 +135,14 @@ def update_progress(progress):
     sys.stdout.flush()
 
 
+def archive_add(file):
+    if args.tar or args.targz:
+        archive.add(file)
+    else:
+        archive.write(file)
+
 progressbar = False
+
 if args.progress:
     # Load progressbar dependencies
     progressbar = True
@@ -169,15 +178,25 @@ else:
     Tor Support needs new concept -> Public tor socks proxy? Public tor http proxy without daily changing cookie!?
 """
 
+use_archive = False
+
 if args.tar:
+    use_archive = True
     temp_dir = tempfile.gettempdir()
-    tar = tarfile.open(temp_dir + "/transfersh-upload.tar", mode="w")
-    tarfilename = temp_dir + "/transfersh-upload.tar"
+    archive = tarfile.open(temp_dir + "/transfersh-upload.tar", mode="w")
+    archivename = temp_dir + "/transfersh-upload.tar"
 
 if args.targz:
+    use_archive = True
     temp_dir = tempfile.gettempdir()
-    tar = tarfile.open(temp_dir + "/transfersh-upload.tar.gz", mode="w:gz")
-    tarfilename = temp_dir + "/transfersh-upload.tar.gz"
+    archive = tarfile.open(temp_dir + "/transfersh-upload.tar.gz", mode="w:gz")
+    archivename = temp_dir + "/transfersh-upload.tar.gz"
+
+if args.zip:
+    use_archive = True
+    temp_dir = tempfile.gettempdir()
+    archive = zipfile.ZipFile(temp_dir + "/transfersh-upload.zip", 'w', zipfile.ZIP_DEFLATED)
+    archivename = temp_dir + "/transfersh-upload.zip"
 
 if args.saveurls:
     savefilename = args.saveurls
@@ -191,20 +210,20 @@ if args.recursive:
     for filename in glob.iglob(args.file + "**", recursive=True):
         check = os.path.isfile(filename)
         if check is not False:
-            if args.tar is True or args.targz is True:
-                tar.add(filename)
+            if use_archive:
+                archive_add(filename)
             else:
                 upload(filename, True)
-    if args.tar is True or args.targz is True:
-        tar.close()
-        upload(tarfilename, False)
-        os.remove(tarfilename)
+    if use_archive:
+        archive.close()
+        upload(archivename, False)
+        os.remove(archivename)
 else:
-    if args.tar is True or args.targz is True:
-        tar.add(args.file)
-        tar.close()
-        upload(tarfilename, False)
-        os.remove(tarfilename)
+    if use_archive:
+        archive_add(args.file)
+        archive.close()
+        upload(archivename, False)
+        os.remove(archivename)
     else:
         upload(args.file, False)
 
