@@ -32,6 +32,9 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
 #### Upload all files as uncompressed tar
         transfersh -rt ./ -n myupload-as-tar.tar
         >>>>File saved at: https://transfer.sh/XXXXX/myupload-as-tar.tar
+#### Upload all files as zip
+        transfersh -rz ./ -n myupload-as-zip.zip
+        >>>>File saved at: https://transfer.sh/XXXXX/myupload-as-zip.zip
 #### Check file for virus with [Virustotal](https://www.virustotal.com)    
         transfersh -vt filename
         >>>>Virustotal Report is available here: https://www.virustotal.com/file/....
