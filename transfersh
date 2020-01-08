@@ -46,13 +46,14 @@ parser.add_argument("-vt", "--virustotal", help="Check file with virustotal", ac
 parser.add_argument("-sn", "--servername", help="Use your server.name instead of transfer.sh e.g. -sn up.de for https://up.de/")
 parser.add_argument("-d", "--dryrun", help="Print the commands that would be executed, but do not execute them.", action="store_true")
 parser.add_argument("-s", "--saveurls", help="Path to file where the URLs should be saved to.")
+parser.add_argument("-us", "--uploadsaveurls", help="Upload the file with the URLs", action="store_true")
 parser.add_argument("-z", "--zip", help="Upload as zip archive", action="store_true")
 # parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
 
 args = parser.parse_args()
 
 
-def upload(file, recursive=False):
+def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
     # Upload procedure
     params = ""
     message = "File saved at: "
@@ -61,7 +62,7 @@ def upload(file, recursive=False):
         params = params + "/virustotal"
         message = "Virustotal Report is available here: "
 
-    if args.name:
+    if args.name and not ignoreNames:
         filename = args.name
     else:
         filename = file.split("/")
@@ -91,8 +92,12 @@ def upload(file, recursive=False):
         else:
             print('\r' + message + response.text)
 
-        if args.saveurls:
+        if args.saveurls and not excludeFromList:
             savefile.write(response.text + '\n')
+
+        if args.uploadsaveurls and not excludeFromList:
+            temp_upload_savefile.write('<a href="{0}">{0}</a>'.format(response.text) + '\n')
+
     else:
         print('File {0} mock saved.'.format(file))
     return
@@ -120,7 +125,6 @@ def callback(monitor):
 # Progress bar
 def update_progress(progress):
     bar_len = [int(n) for n in os.popen('stty size', 'r').read().split()][1] - 24
-    #print(bar_len)
     status = ""
 
     if progress == -1:
@@ -202,6 +206,11 @@ if args.saveurls:
     savefilename = args.saveurls
     savefile = open(savefilename, 'a+')
 
+if args.uploadsaveurls:
+    temp_dir = tempfile.gettempdir()
+    temp_upload_savefile_name = tempfile.gettempdir() + "/transfersh-savefile.txt"
+    temp_upload_savefile = open(temp_upload_savefile_name, 'w')
+
 
 if args.recursive:
     isfile = os.path.isfile(args.file)
@@ -229,3 +238,8 @@ else:
 
 if args.saveurls:
     savefile.close()
+
+if args.uploadsaveurls:
+    temp_upload_savefile.close()
+    upload(temp_upload_savefile_name, False, True, True)
+    os.remove(temp_upload_savefile_name)
