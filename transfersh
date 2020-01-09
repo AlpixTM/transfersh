@@ -98,7 +98,7 @@ def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
             savefile.write(response.text + '\n')
 
         if args.uploadsaveurls and not excludeFromList:
-            temp_upload_savefile.write('<a href="{0}">{0}</a>'.format(response.text) + '\n')
+            temp_upload_savefile.write('\r File ' + file + ' saved at: ' + response.text)
 
     else:
         print('File {0} mock saved.'.format(file))
