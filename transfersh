@@ -79,6 +79,7 @@ def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
     if not args.dryrun:
         with open(file, 'rb', 0) as fh:
             if progressbar:
+                reset_progress()
                 # Dirty MultipartEncoder object(required byMultipartEncoderMonitor) simulation hack
                 fh.len = os.path.getsize(file)
 
@@ -105,6 +106,11 @@ def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
 
 
 last_progress = 0
+
+
+def reset_progress():
+    global last_progress
+    last_progress = 0
 
 
 def callback(monitor):
