@@ -71,7 +71,7 @@ def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
     if upload_servername == "transfer.sh":
         if(os.path.getsize(file) > 1073741824):
             print("As of 2020 until unknown, https://transfer.sh only accept files up to 1GB."
-                  "This file is bigger. "
+                  "This file is bigger."
                   "Anyway, let's try this...")
             time.sleep(3)
 
