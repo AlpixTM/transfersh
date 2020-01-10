@@ -56,11 +56,11 @@ args = parser.parse_args()
 def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
     # Upload procedure
     params = ""
-    message = "File saved at: "
+    message = "File {} saved at: {}"
 
     if args.virustotal:
         params = params + "/virustotal"
-        message = "Virustotal Report is available here: "
+        message = "Virustotal Report for file {} is available here: {}"
 
     if args.name and not ignoreNames:
         filename = args.name
@@ -89,10 +89,7 @@ def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
 
             response = requests.put('https://' + upload_servername + '/' + filename + params, data)
 
-        if recursive:
-            print('\r File ' + file + ' saved at: ' + response.text)
-        else:
-            print('\r' + message + response.text)
+            print('\r' + message.format(file, response.text))
 
         if args.saveurls and not excludeFromList:
             savefile.write(response.text + '\n')
