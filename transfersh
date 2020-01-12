@@ -48,6 +48,7 @@ parser.add_argument("-d", "--dryrun", help="Print the commands that would be exe
 parser.add_argument("-s", "--saveurls", help="Path to file where the URLs should be saved to.")
 parser.add_argument("-us", "--uploadsaveurls", help="Upload the file with the URLs", action="store_true")
 parser.add_argument("-z", "--zip", help="Upload as zip archive", action="store_true")
+parser.add_argument("-mt", "--matchType", help="Only upload files, that match this file type")
 # parser.add_argument("-t", "--tor", help="upload files via tor network",action="store_true")
 
 args = parser.parse_args()
@@ -180,6 +181,10 @@ else:
     # default server transfer.sh
     upload_servername = "transfer.sh"
 
+if args.matchType:
+    if args.matchType[0] == ".":
+        args.matchType = args.matchType[1:]
+
 
 """
     if args.tor:
@@ -223,10 +228,12 @@ if args.recursive:
     for filename in glob.iglob(args.file + "**", recursive=True):
         check = os.path.isfile(filename)
         if check is not False:
-            if use_archive:
-                archive_add(filename)
-            else:
-                upload(filename, True)
+            print(filename)
+            if (str(str(filename.split("/")[-1]).split(".", 1)[-1]) == args.matchType and "." in filename) or not args.matchType:
+                if use_archive:
+                    archive_add(filename)
+                else:
+                    upload(filename, True)
     if use_archive:
         archive.close()
         upload(archivename, False)
