@@ -232,14 +232,13 @@ if args.recursive:
     if isfile:
         exit("Not a dir -> do not use -r // --recursive")
     for filename in glob.iglob(args.file + "**", recursive=True):
-        check = os.path.isfile(filename)
-        if check is not False:
-            if ((str(str(filename.split("/")[-1]).split(".", 1)[-1]) == args.matchType and "." in filename) or not args.matchType) \
-                    and ((str(str(filename.split("/")[-1]).split(".", 1)[-1]) != args.matchType or "." not in filename) or not args.excludeType):
-                if use_archive:
-                    archive_add(filename)
-                else:
-                    upload(filename, True)
+        if os.path.isfile(filename) is not False and \
+                ((str(str(filename.split("/")[-1]).split(".", 1)[-1]) == args.matchType and "." in filename) or not args.matchType) and \
+                ((str(str(filename.split("/")[-1]).split(".", 1)[-1]) != args.excludeType or "." not in filename) or not args.excludeType):
+            if use_archive:
+                archive_add(filename)
+            else:
+                upload(filename, True)
     if use_archive:
         archive.close()
         upload(archivename, False)
