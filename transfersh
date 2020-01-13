@@ -150,6 +150,7 @@ def archive_add(file):
     else:
         archive.write(file)
 
+
 progressbar = False
 
 if args.progress:
