@@ -232,9 +232,10 @@ if args.recursive:
     if isfile:
         exit("Not a dir -> do not use -r // --recursive")
     for filename in glob.iglob(args.file + "**", recursive=True):
+        filetype = str(str(filename.split("/")[-1]).split(".", 1)[-1])
         if os.path.isfile(filename) is not False and \
-                ((str(str(filename.split("/")[-1]).split(".", 1)[-1]) == args.matchType and "." in filename) or not args.matchType) and \
-                ((str(str(filename.split("/")[-1]).split(".", 1)[-1]) != args.excludeType or "." not in filename) or not args.excludeType):
+                ((filetype == args.matchType and "." in filename) or not args.matchType) and \
+                ((filetype != args.excludeType or "." not in filename) or not args.excludeType):
             if use_archive:
                 archive_add(filename)
             else:
