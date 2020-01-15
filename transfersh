@@ -55,7 +55,7 @@ parser.add_argument("-et", "--excludeType", help="Don`t upload files, that match
 args = parser.parse_args()
 
 
-def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
+def upload(file, recursive=False, exclude_from_list=False, ignore_names=False):
     # Upload procedure
     params = ""
     message = "File {} saved at: {}"
@@ -64,7 +64,7 @@ def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
         params = params + "/virustotal"
         message = "Virustotal Report for file {} is available here: {}"
 
-    if args.name and not ignoreNames:
+    if args.name and not ignore_names:
         filename = args.name
     else:
         filename = file.split("/")
@@ -92,10 +92,10 @@ def upload(file, recursive=False, excludeFromList=False, ignoreNames=False):
 
             print('\r' + message.format(file, response.text))
 
-        if args.saveurls and not excludeFromList:
+        if args.saveurls and not exclude_from_list:
             savefile.write(response.text + '\n')
 
-        if args.uploadsaveurls and not excludeFromList:
+        if args.uploadsaveurls and not exclude_from_list:
             temp_upload_savefile.write('\r File ' + file + ' saved at: ' + response.text)
 
     else:
