@@ -56,29 +56,29 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
 ### Install 
 <a name="install"></a>
 ##### Debian / Ubuntu
-    (Out of date at the moment!)
-    1. echo "deb [trusted=yes] http://mirror.alpix.eu/ debianpkg/" >> /etc/apt/sources.list
-    2. apt-get update && apt-get upgrade
-    3. apt-get install transfersh -y
+        (Out of date at the moment!)
+        1. echo "deb [trusted=yes] http://mirror.alpix.eu/ debianpkg/" >> /etc/apt/sources.list
+        2. apt-get update && apt-get upgrade
+        3. apt-get install transfersh -y
 #### Arch-based systems
-    If you can access the AUR with your package manager (https://aur.archlinux.org/):
-        e.g. yaourt as package manager:  
-            1.  yaourt -S transfersh
-    If not do it manually
-        1. curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/transfersh.tar.gz
-        2. tar xf transfersh.tar.gz
-        3. cd transfersh && makepkg -si
-    *Last step: Vote on aur if the package is useful for you. <3*
+        If you can access the AUR with your package manager (https://aur.archlinux.org/):
+            e.g. yaourt as package manager:  
+                1.  yaourt -S transfersh
+        If not do it manually
+            1. curl -L -O https://aur.archlinux.org/cgit/aur.git/snapshot/transfersh.tar.gz
+            2. tar xf transfersh.tar.gz
+            3. cd transfersh && makepkg -si
+        *Last step: Vote on aur if the package is useful for you. <3*
 #### Manual install
-    1. Download lates release of transfersh
-    2. Untar/unzip it
-    3. Place the transfersh file in /usr/bin/
-    4. Set the right user rights with chmod
-    5. Make sure you have installed python
-    6. Install the requirements
-        6.1 sudo pip install requests
-        6.2 Olny needed for progress bar:
-            sudo pip install requests_toolbelt 
+        1. Download lates release of transfersh
+        2. Untar/unzip it
+        3. Place the transfersh file in /usr/bin/
+        4. Set the right user rights with chmod
+        5. Make sure you have installed python
+        6. Install the requirements
+            6.1 sudo pip install requests
+            6.2 Olny needed for progress bar:
+                sudo pip install requests_toolbelt 
 
 #### PLEASE FEEL FREE TO CONTRIBUTE!
 Just create a Pull request...
