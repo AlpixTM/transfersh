@@ -79,6 +79,11 @@ unofficial command-line client for https://github.com/dutchcoders/transfer.sh (h
             6.1 sudo pip install requests
             6.2 Olny needed for progress bar:
                 sudo pip install requests_toolbelt 
+                
+#### Progess bar
+If you want to use the progress bar (-p), you need to install requests_toolbelt!
 
+        sudo pip install requests_toolbelt
+        
 #### PLEASE FEEL FREE TO CONTRIBUTE!
 Just create a Pull request...
